@@ -1,7 +1,20 @@
-html, body {
-  width: 350px;
-  height: 350px;
-  background: #b5d1ff;
+.container {
+  display: grid;
+  grid-template-columns: 100px 600px;
+    
+  background-color: #dddd00;
+  padding: 10px;
+  border-radius: 10px;
   font-family: sans-serif;
+}
+
+
+
+.container > div {
+  background-color: #80cbc4;
+  border: 1px solid #fff;
+  padding: 5px;
+  font-size: 1em;
+  text-align: center;
 }
 
