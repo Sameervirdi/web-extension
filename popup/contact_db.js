@@ -1,4 +1,3 @@
-
 /*
  * This function just inserts a bunch of records into browser storage.
  *
@@ -11,24 +10,24 @@ function setItem() {
 
 function gotPerson(item) {
     console.log("OK - item fetched");
-    console.log(`Name is: ${item.entry.name}`);
-    console.log(`Email is: ${item.entry.email}`);
 
-    /* TODO: 
-     * 1. Create a div tags like what we have in the HTML already.
-     * 2. Find the div container, and append the new tags to the list
-          of child tags inside of the div container
-     */
-    var call_tag = document.createElement("div");
-    var button = document.createElement("button");
-    button.innerHTML = "Call";
-    call_tag.appendChild(button);
+    item.db.entries.forEach(function(entry) {
+        console.log(`Name is: ${entry.name}`);
+        console.log(`Email is: ${entry.email}`);
 
-    var name_tag = document.createElement("div");
-    name_tag.innerHTML = `${item.entry.name} &lt;${item.entry.email}&gt;`;
 
-    document.getElementById("id_container").appendChild(call_tag);
-    document.getElementById("id_container").appendChild(name_tag);
+        var call_tag = document.createElement("div");
+        var button = document.createElement("button");
+        button.innerHTML = "Call";
+        call_tag.appendChild(button);
+
+        var name_tag = document.createElement("div");
+        name_tag.innerHTML = `${entry.name} &lt;${entry.email}&gt;`;
+    
+        document.getElementById("id_container").appendChild(call_tag);
+        document.getElementById("id_container").appendChild(name_tag);
+    });
+
 }
 
 function onError(error) {
@@ -38,16 +37,32 @@ function onError(error) {
 function preload_db() {
 
     // define an object
-    var entry = {
-        name: "Victor",
-        email: "victor@crankycoder.com",
+    var db = {
+        "entries": [
+        {   
+            name: "Victor",
+            email: "victor@crankycoder.com"
+        },
+        {
+            name: "Sameer",
+            email: "samvirdi@outlook.com"
+        },
+        {
+            name: "Brendan",
+            email: "brendan.choy@crankycoder.com"
+        },
+        {
+            name: "Rosie",
+            email: "thing1@crankycoder.com"
+        }
+        ]
     }
 
     // store the objects
-    browser.storage.local.set({entry})
+    browser.storage.local.set({db})
         .then(setItem, onError);
 
-    browser.storage.local.get("entry")
+    browser.storage.local.get("db")
       .then(gotPerson, onError);
 
 }
@@ -57,4 +72,3 @@ function load_records_from_db() {
 
 
 preload_db();
-
